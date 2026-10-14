@@ -1,0 +1,61 @@
+.tech-stacks {
+  background: var(--dark-navy-blue);
+  border: 2px solid var(--subtle-border);
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.tech-title {
+  font-size: 0.875rem;
+  color: var(--hextech-gold);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--subtle-border);
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.tech-badge {
+  background: var(--interface-blue);
+  border: 1px solid var(--subtle-border);
+  border-radius: 4px;
+  padding: 10px 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: default;
+}
+
+.tech-badge:hover {
+  background: rgba(10, 50, 60, 0.8);
+  border-color: var(--hextech-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(200, 170, 110, 0.2);
+}
+
+.tech-name {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--light-gray);
+}
+
+/* ==================== RESPONSIVE ==================== */
+
+@media (max-width: 768px) {
+  .tech-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 6px;
+  }
+  
+  .tech-badge {
+    padding: 8px 10px;
+  }
+  
+  .tech-name {
+    font-size: 0.75rem;
+  }
+}

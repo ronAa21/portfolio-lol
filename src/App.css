@@ -1,0 +1,22 @@
+.app {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--deep-navy);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background effects */
+.app::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(ellipse at top, rgba(3, 151, 171, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom, rgba(200, 170, 110, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}

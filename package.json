@@ -1,0 +1,32 @@
+{
+  "name": "league-portfolio-themed",
+  "version": "1.0.0",
+  "description": "League of Legends-inspired video editing portfolio website",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.22.0",
+    "framer-motion": "^11.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ronAa21/portfolio-lol.git"
+  },
+  "keywords": ["portfolio", "league-of-legends", "video-editing", "react"],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ronAa21/portfolio-lol/issues"
+  },
+  "homepage": "https://github.com/ronAa21/portfolio-lol#readme"
+}
