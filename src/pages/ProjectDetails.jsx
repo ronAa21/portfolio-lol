@@ -20,8 +20,12 @@ const ProjectDetails = ({ project, onBack, onFinish }) => {
 
   const categoryInfo = project.category ? categories[project.category] : null;
 
+  const backgroundStyle = project.backgroundImage 
+    ? { backgroundImage: `url(${project.backgroundImage})` }
+    : {};
+
   return (
-    <div className="project-details">
+    <div className="project-details" style={backgroundStyle}>
       <div className="project-details-header">
         <div className="header-left">
           <button className="header-btn" onClick={onBack}>

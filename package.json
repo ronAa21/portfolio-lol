@@ -9,10 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hugeicons/react": "^1.1.10",
+    "framer-motion": "^11.0.0",
+    "lucide-react": "^1.62.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.22.0",
-    "framer-motion": "^11.0.0"
+    "react-router-dom": "^6.22.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
@@ -22,7 +24,12 @@
     "type": "git",
     "url": "git+https://github.com/ronAa21/portfolio-lol.git"
   },
-  "keywords": ["portfolio", "league-of-legends", "video-editing", "react"],
+  "keywords": [
+    "portfolio",
+    "league-of-legends",
+    "video-editing",
+    "react"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {

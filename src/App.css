@@ -1,9 +1,50 @@
 .app {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   background: var(--deep-navy);
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden; /* Disable all scrolling */
+}
+
+/* Page Transitions - Only animate main content areas */
+.page-transition {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Animate only the main content areas, not navigation or sidebar */
+.page-transition.fade-in .home-content,
+.page-transition.fade-in .tech-page-body,
+.page-transition.fade-in .profile-content {
+  animation: fadeInContent 0.3s ease-in-out both;
+}
+
+.page-transition.fade-out .home-content,
+.page-transition.fade-out .tech-page-body,
+.page-transition.fade-out .profile-content {
+  animation: fadeOutContent 0.3s ease-in-out both;
+}
+
+@keyframes fadeInContent {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutContent {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
 }
 
 /* Background effects */

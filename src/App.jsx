@@ -1,36 +1,36 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import HomePage from './pages/HomePage';
-import MatchmakingScreen from './components/MatchmakingScreen';
-import MatchFoundScreen from './components/MatchFoundScreen';
+import TechPage from './pages/TechPage';
+import ProfilePage from './pages/ProfilePage';
 import ChampionSelect from './pages/ChampionSelect';
 import ProjectDetails from './pages/ProjectDetails';
 import PostGameScreen from './components/PostGameScreen';
 import './App.css';
 
 function App() {
-  const [gameState, setGameState] = useState('home'); // home, searching, matchFound, championSelect, projectDetails, postGame
+  const [gameState, setGameState] = useState('home'); // home, tech, profile, championSelect, projectDetails, postGame
   const [selectedProject, setSelectedProject] = useState(null);
-  const [skipIntro, setSkipIntro] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const transitionToState = (newState) => {
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setGameState(newState);
+      setIsTransitioning(false);
+    }, 300); // Match CSS transition duration
+  };
 
   const handlePlayClick = () => {
-    if (skipIntro) {
-      setGameState('championSelect');
-    } else {
-      setGameState('searching');
-    }
+    transitionToState('championSelect');
   };
 
-  const handleMatchFound = () => {
-    setGameState('matchFound');
+  const handleTechClick = () => {
+    transitionToState('tech');
   };
 
-  const handleAcceptMatch = () => {
-    setGameState('championSelect');
-  };
-
-  const handleDeclineMatch = () => {
-    setGameState('home');
+  const handleProfileClick = () => {
+    transitionToState('profile');
   };
 
   const handleProjectSelect = (project) => {
@@ -49,29 +49,38 @@ function App() {
 
   const handleReturnHome = () => {
     setSelectedProject(null);
-    setGameState('home');
+    transitionToState('home');
   };
 
   return (
     <Router>
       <div className="app">
         {gameState === 'home' && (
-          <HomePage 
-            onPlayClick={handlePlayClick} 
-            skipIntro={skipIntro}
-            setSkipIntro={setSkipIntro}
-          />
+          <div className={`page-transition ${isTransitioning ? 'fade-out' : 'fade-in'}`}>
+            <HomePage 
+              onPlayClick={handlePlayClick}
+              onTechClick={handleTechClick}
+              onProfileClick={handleProfileClick}
+            />
+          </div>
         )}
         
-        {gameState === 'searching' && (
-          <MatchmakingScreen onMatchFound={handleMatchFound} />
+        {gameState === 'tech' && (
+          <div className={`page-transition ${isTransitioning ? 'fade-out' : 'fade-in'}`}>
+            <TechPage 
+              onPlayClick={handlePlayClick}
+              onHomeClick={handleReturnHome}
+              onProfileClick={handleProfileClick}
+            />
+          </div>
         )}
         
-        {gameState === 'matchFound' && (
-          <MatchFoundScreen 
-            onAccept={handleAcceptMatch}
-            onDecline={handleDeclineMatch}
-          />
+        {gameState === 'profile' && (
+          <div className={`page-transition ${isTransitioning ? 'fade-out' : 'fade-in'}`}>
+            <ProfilePage 
+              onBackClick={handleReturnHome}
+            />
+          </div>
         )}
         
         {gameState === 'championSelect' && (

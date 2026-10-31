@@ -20,7 +20,7 @@ const PlayButton = ({ onClick }) => {
             <path d="M2 0L22 14L2 28V0Z"/>
           </svg>
         </div>
-        <span className="play-text">PLAY</span>
+        <span className="play-text">Hello</span>
       </div>
       
       <div className="play-button-shine"></div>

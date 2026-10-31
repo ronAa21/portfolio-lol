@@ -11,7 +11,7 @@ A highly immersive, interactive portfolio website inspired by the League of Lege
 - **Software Projects Tab**: Option to showcase software development projects
 - **Friends List / Social Panel**: Contact links disguised as LoL friends list
 - **Contact Modal**: League-styled contact form for client inquiries
-- **Responsive Design**: Works on desktop, tablet, and mobile devices
+- **Responsive Design**: Works on desktop, tablet, and  devices
 - **Smooth Animations**: Premium animations and transitions throughout
 
 ## 🚀 Tech Stack
@@ -192,7 +192,7 @@ npm run build
 - **Desktop**: 1920px and above (optimal)
 - **Laptop**: 1024px - 1920px
 - **Tablet**: 768px - 1024px
-- **Mobile**: Below 768px
+- ****: Below 768px
 
 ## 🎨 Typography
 

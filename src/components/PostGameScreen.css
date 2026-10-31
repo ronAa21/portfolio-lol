@@ -85,7 +85,10 @@
 }
 
 .post-game-btn {
-  font-family: var(--font-heading);
+  font-family: "Cinzel", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
   font-size: 1.125rem;
   font-weight: 700;
   text-transform: uppercase;

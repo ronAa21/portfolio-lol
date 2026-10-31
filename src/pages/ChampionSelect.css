@@ -145,7 +145,10 @@
   width: 100%;
   background: var(--dark-navy-blue);
   color: var(--light-gray);
-  font-family: var(--font-body);
+  font-family: "Cinzel", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
   font-size: 0.875rem;
   padding: 14px 20px;
   border: 2px solid var(--subtle-border);
@@ -236,7 +239,10 @@
 .lock-in-btn {
   background: linear-gradient(180deg, var(--hextech-gold) 0%, var(--muted-gold) 100%);
   color: var(--deep-navy);
-  font-family: var(--font-heading);
+  font-family: "Cinzel", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
   font-size: 1.125rem;
   font-weight: 700;
   text-transform: uppercase;

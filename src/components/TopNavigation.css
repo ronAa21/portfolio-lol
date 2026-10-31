@@ -3,17 +3,24 @@
   background: var(--dark-navy-blue);
   border-bottom: 1px solid var(--subtle-border);
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  position: sticky;
+  flex-direction: column;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  height: 60px;
 }
 
 .nav-main-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 60px;
+}
+
+.nav-left-section {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -24,6 +31,14 @@
   z-index: 10;
   display: flex;
   align-items: center;
+}
+
+.brand-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--hextech-gold);
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 10px rgba(200, 170, 110, 0.4);
 }
 
 .logo-icon {
@@ -43,6 +58,22 @@
   justify-content: center;
   transition: all 0.3s ease;
   margin-left: -8px;
+}
+
+/* Static Play Button - Non-clickable */
+.arrow-bar.static {
+  cursor: default;
+  opacity: 0.8;
+}
+
+.arrow-bar.static:hover .arrow-path {
+  fill: #1E2328;
+  stroke: url(#arrowStroke);
+  filter: url(#dropShadow);
+}
+
+.arrow-bar.static .play-text {
+  opacity: 0.9;
 }
 
 .arrow-bar-svg {
@@ -79,7 +110,46 @@
 .nav-secondary {
   display: flex;
   align-items: center;
-  gap: 24px;
+  justify-content: space-between;
+  padding: 8px 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  min-height: 40px;
+}
+
+.nav-secondary-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #c8aa6e;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.nav-secondary-left svg {
+  width: 16px;
+  height: 16px;
+}
+
+.nav-secondary-right {
+  display: flex;
+  align-items: center;
+}
+
+.tech-timer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #a09b8c;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.timer-icon {
+  color: #c8aa6e;
 }
 
 .nav-links {
@@ -188,10 +258,23 @@
 .profile-avatar {
   width: 40px;
   height: 40px;
-  background: linear-gradient(135deg, var(--hextech-blue) 0%, var(--hextech-gold) 100%);
   border: 2px solid var(--hextech-gold);
   border-radius: 50%;
   box-shadow: 0 0 10px rgba(200, 170, 110, 0.3);
+  object-fit: cover;
+}
+
+.profile-avatar-placeholder {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--hextech-gold);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(200, 170, 110, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(200, 170, 110, 0.1);
+  color: var(--hextech-gold);
 }
 
 .profile-info {
@@ -218,8 +301,79 @@
 /* ==================== RESPONSIVE ==================== */
 
 @media (max-width: 1024px) {
-  .nav-links {
+  .currency-display {
     display: none;
+  }
+  
+  .nav-icon-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-main-bar {
+    padding: 0 8px;
+    height: 56px;
+  }
+  
+  .nav-left-section {
+    gap: 4px;
+    flex: 1;
+  }
+  
+  .brand-text {
+    font-size: 1.25rem;
+  }
+  
+  .logo-icon {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .arrow-bar {
+    width: 90px;
+    height: 32px;
+    margin-left: 0;
+  }
+  
+  .play-text {
+    font-size: 0.7rem;
+    margin-left: 4px;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 4px;
+    flex: 1;
+  }
+  
+  .nav-link {
+    font-size: 0.7rem;
+    padding: 6px 10px;
+    white-space: nowrap;
+  }
+  
+  .nav-right {
+    gap: 8px;
+  }
+  
+  .nav-icon-btn {
+    padding: 4px;
+    display: none;
+  }
+  
+  .profile-info {
+    display: none;
+  }
+  
+  .profile-avatar-placeholder {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .profile-avatar-placeholder svg {
+    width: 24px;
+    height: 24px;
   }
   
   .currency-display {
@@ -227,30 +381,39 @@
   }
 }
 
-@media (max-width: 768px) {
-  .top-navigation {
-    padding: 0 12px;
+@media (max-width: 480px) {
+  .nav-main-bar {
+    padding: 0 6px;
+    height: 52px;
   }
   
-  .logo-icon {
-    width: 40px;
-    height: 40px;
+  .brand-text {
+    font-size: 1.1rem;
   }
   
   .arrow-bar {
-    width: 100px;
-    height: 30px;
+    width: 80px;
+    height: 28px;
   }
   
   .play-text {
-    font-size: 0.75rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
   }
   
-  .nav-icon-btn {
-    padding: 6px;
+  .nav-link {
+    font-size: 0.65rem;
+    padding: 5px 8px;
   }
   
-  .profile-info {
-    display: none;
+  .profile-avatar-placeholder {
+    width: 32px;
+    height: 32px;
+    border-width: 1px;
+  }
+  
+  .profile-avatar-placeholder svg {
+    width: 20px;
+    height: 20px;
   }
 }

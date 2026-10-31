@@ -90,7 +90,7 @@ export const projectsData = [
     id: 7,
     title: "TikTok Ad Campaign",
     category: "bot", // short-form
-    thumbnail: "https://via.placeholder.com/300x200/091428/F0E6D2?text=Project+7",
+    thumbnail: "/src/visuals/tiktok-vid1.jpg",
     videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
     description: "Series of 15-second ads optimized for TikTok algorithm and trending formats.",
     software: ["Adobe Premiere Pro", "After Effects"],
@@ -156,6 +156,86 @@ export const softwareProjects = [
     technologies: ["React", "CSS", "Framer Motion"],
     liveUrl: "#",
     githubUrl: "https://github.com/yourusername/portfolio",
+    featured: true
+  },
+  {
+    id: 102,
+    title: "Pet Adoption Management System",
+    category: "fullstack",
+    thumbnail: "/src/visuals/pet-ad-icon.jpg",
+    description: "A comprehensive web application for managing pet adoption processes, connecting potential adopters with pets in need of homes. Features include pet listings, user authentication, adoption applications, and admin dashboard.",
+    technologies: ["React", "Node.js", "Express", "MongoDB"],
+    liveUrl: "https://pet-adoption-system-frontend.onrender.com/",
+    githubUrl: "https://github.com/ronAa21/Pet-Adoption-System",
+    featured: true
+  },
+  {
+    id: 103,
+    title: "Notes",
+    category: "fullstack",
+    thumbnail: "/src/visuals/notes-icon.jpg",
+    backgroundImage: "/src/visuals/notes-pic.png",
+    description: "For learning purposes",
+    technologies: ["HTML/CSS", "JavaScript", "Node.js", "MySQL"],
+    liveUrl: "https://first-notes.onrender.com/index.html",
+    githubUrl: "https://github.com/ronAa21/Notes-Website",
+    featured: true
+  },
+  {
+    id: 104,
+    title: "Decision App",
+    category: "fullstack",
+    thumbnail: "/src/visuals/decisionSS.png",
+    description: "An interactive web application designed to help users make decisions through a simple and intuitive interface. Features random decision generation and user-friendly interactions.",
+    technologies: ["JavaScript", "HTML", "CSS"],
+    githubUrl: "https://github.com/ronAa21/Decision-app",
+    featured: true
+  },
+  {
+    id: 105,
+    title: "About Me Page",
+    category: "frontend",
+    thumbnail: "/src/visuals/megacat.png",
+    description: "A creative and interactive personal about me website showcasing frontend development skills. Features engaging animations, modern design principles, and responsive layout.",
+    technologies: ["HTML", "CSS"],
+    liveUrl: "https://about-me-website-five.vercel.app/",
+    githubUrl: "https://github.com/ronAa21/About-me-website",
+    featured: true
+  },
+  {
+    id: 106,
+    title: "Gutenverse Clone",
+    category: "frontend",
+    thumbnail: "/src/visuals/gutenverse.png",
+    description: "A pixel-perfect clone of the Gutenverse website showcasing advanced frontend development skills. Features modern design implementation, responsive layouts, and attention to detail in recreating the original design.",
+    technologies: ["HTML", "CSS"],
+    liveUrl: "https://gutenverse-clone-3q4z.vercel.app/",
+    githubUrl: "https://github.com/ronAa21/Gutenverse-Clone-",
+    featured: true
+  },
+  {
+    id: 107,
+    title: "Threads Social Platform",
+    category: "fullstack",
+    thumbnail: "/src/visuals/threads-pic.png",
+    backgroundImage: "/src/visuals/threads-pic.png",
+    description: "A modern social media platform inspired by Threads, featuring real-time conversations, user interactions, and a sleek interface. Built with focus on performance and user experience.",
+    technologies: ["React", "Node.js", "MongoDB", "Socket.io"],
+    liveUrl: "#",
+    githubUrl: "#",
+    featured: true
+  },
+  {
+    id: 108,
+    title: "Pet Adoption",
+    category: "fullstack",
+    thumbnail: "/src/visuals/pet-ad-icon.jpg",
+    backgroundImage: "/src/visuals/pet-ad.png",
+    description: "My first ML-integrated project",
+    technologies: ["React", "JavaScript", "Node.js", "MySQL", "Python"],
+    software: ["Final Cut Pro"],
+    liveUrl: "#",
+    githubUrl: "#",
     featured: true
   },
   // Add more software projects here if needed
