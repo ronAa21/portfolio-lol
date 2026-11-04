@@ -27,6 +27,19 @@ const CATEGORIES = {
   ]
 };
 
+const TECH_ICONS = {
+  HTML: "devicon-html5-plain",
+  CSS: "devicon-css3-plain",
+  JavaScript: "devicon-javascript-plain",
+  "Node.js": "devicon-nodejs-plain",
+  MySQL: "devicon-mysql-plain",
+  React: "devicon-react-original",
+  "Express.js": "devicon-express-original",
+  MongoDB: "devicon-mongodb-plain",
+  PostgreSQL: "devicon-postgresql-plain",
+  Python: "devicon-python-plain",
+};
+
 const TechStacks = () => {
   const [activeCategory, setActiveCategory] = useState("Editing");
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -109,9 +122,13 @@ const TechStacks = () => {
           {selectedProject[9] && (
             <div className="tech-stack-icons">
               {selectedProject[9].map((tech, idx) => (
-                <div key={idx} className="tech-badge" title={tech}>
-                  {tech.substring(0, tech === 'JavaScript' ? 'JS' : tech === 'Node.js' ? 'N' : tech === 'MySQL' ? 'SQL' : tech.substring(0, tech.indexOf('.')  > 0 ? tech.indexOf('.') : 2)).toUpperCase()}
-                </div>
+                TECH_ICONS[tech] ? (
+                  <i key={idx} className={TECH_ICONS[tech]} title={tech} aria-label={tech} />
+                ) : (
+                  <div key={idx} className="tech-badge" title={tech}>
+                    {tech.substring(0, tech.indexOf('.') > 0 ? tech.indexOf('.') : 2).toUpperCase()}
+                  </div>
+                )
               ))}
             </div>
           )}

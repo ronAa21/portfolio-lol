@@ -275,6 +275,7 @@
   justify-content: center;
   background: rgba(200, 170, 110, 0.1);
   color: var(--hextech-gold);
+  overflow: hidden;
 }
 
 .profile-info {

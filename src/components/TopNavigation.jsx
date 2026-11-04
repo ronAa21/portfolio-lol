@@ -1,5 +1,6 @@
 import React from 'react';
 import './TopNavigation.css';
+import profileImage from '../visuals/me.jpg';
 
 const TopNavigation = ({ onPlayClick, onHomeClick, onTechClick, onProfileClick, showWelcome = false, pageTitle = null }) => {
   return (
@@ -84,11 +85,12 @@ const TopNavigation = ({ onPlayClick, onHomeClick, onTechClick, onProfileClick, 
           </div>
           
           <div className="profile-display" onClick={onProfileClick} style={{ cursor: 'pointer' }}>
-            <div className="profile-avatar-placeholder">
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
-                <circle cx="16" cy="12" r="6"/>
-                <path d="M4 28c0-6 5.4-11 12-11s12 5 12 11"/>
-              </svg>
+            <div className="profile-avatar-placeholder" style={{ 
+              backgroundImage: `url(${profileImage})`, 
+              backgroundSize: 'cover', 
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}>
             </div>
             <div className="profile-info">
               <span className="profile-name">Aaron</span>

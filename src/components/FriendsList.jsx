@@ -135,31 +135,9 @@ const FriendsList = () => {
 
   const handleFriendClick = (friend) => {
     if (friend.type === 'email') {
-      // Close mobile menu first on mobile, then open modal
-      if (window.innerWidth <= 768 && mobileMenuOpen) {
-        closeMobileMenu();
-        // Delay opening modal slightly to allow close animation
-        setTimeout(() => {
-          setShowContactModal(true);
-        }, 100);
-      } else {
-        setShowContactModal(true);
-      }
+      setShowContactModal(true);
     } else {
       window.open(friend.link, '_blank');
-    }
-  };
-
-  const handleChatButtonClick = () => {
-    // Close mobile menu first on mobile, then open modal
-    if (window.innerWidth <= 768 && mobileMenuOpen) {
-      closeMobileMenu();
-      // Delay opening modal slightly to allow close animation
-      setTimeout(() => {
-        setShowContactModal(true);
-      }, 100);
-    } else {
-      setShowContactModal(true);
     }
   };
 
@@ -188,7 +166,7 @@ const FriendsList = () => {
         aria-label="Toggle Friends List"
       >
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
           <line x1="3" y1="6" x2="21" y2="6"/>
           <line x1="3" y1="18" x2="21" y2="18"/>
         </svg>
@@ -248,16 +226,7 @@ const FriendsList = () => {
         </div>
 
         <div className="friends-actions">
-          <button 
-            className="chat-icon-btn"
-            onClick={handleChatButtonClick}
-            title="Contact Me"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
-            </svg>
-            <span className="notification-badge">1</span>
-          </button>
+        
         </div>
       </div>
 

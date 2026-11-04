@@ -1,0 +1,18 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>body{margin:0}</style></head>
+<body><div id="root"></div>
+<script type="module">
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { MemoryRouter } from 'react-router-dom';
+import TechPage from '/src/pages/TechPage.jsx';
+ReactDOM.createRoot(document.getElementById('root')).render(
+  React.createElement(MemoryRouter, null, React.createElement(TechPage, {}))
+);
+const tab = new URLSearchParams(location.search).get('tab');
+if (tab) setTimeout(() => {
+  const btn = [...document.querySelectorAll('.tech-category-btn')].find(b => b.textContent.trim().toUpperCase() === tab.toUpperCase());
+  if (btn) btn.click();
+}, 1200);
+</script></body></html>

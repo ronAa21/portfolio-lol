@@ -1,6 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import { SquarePlay, CodeXml, Trophy, ShieldHalf, ShieldCheck, Certificate, FlagTriangleRight, X, ExternalLink, Download, Award, PhoneLog, MailDot, Link, GitMerge, Medal } from 'lucide-react';
 import { projectsData, softwareProjects } from '../data/projectsData';
+import profileImage from '../visuals/me.jpg';
+
+// Import videos for background slideshow
+import facelessVideo from '../media/faceless-channel-vid.mp4';
+import feverDreamVideo from '../media/fever-dream.mp4';
+import lyricVideo from '../media/lyric-vid.mp4';
+import motivationVideo from '../media/motivation.mp4';
+import oldVideo from '../media/old-vid.mp4';
+import transitionalVideo from '../media/transitional-vid.mp4';
+import typographyVideo from '../media/typography.mp4';
+import ugcVideo from '../media/UGC-Sample.mp4';
 
 // ---- PROJECTS: Combined video and software projects ----
 const PROJECTS = [
@@ -260,17 +271,49 @@ const CSS = `
 
 .ap-stage { position: relative; height: 100%; display: grid; grid-template-columns: 290px 1fr; }
 .ap-backdrop {
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; z-index: 0;
   background:
     radial-gradient(ellipse 38% 46% at 62% 30%, rgba(190,225,255,.55), rgba(70,130,190,.18) 55%, transparent 75%),
     radial-gradient(ellipse 60% 60% at 70% 40%, #14304a, transparent 70%),
     linear-gradient(180deg, #0a1626, var(--ap-bg) 85%);
 }
-.ap-backdrop::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, var(--ap-bg) 92%); }
+.ap-backdrop::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, var(--ap-bg) 92%); z-index: 2; }
+
+/* Video Slideshow Background */
+.ap-video-slideshow {
+  position: absolute; inset: 0; z-index: 0; overflow: hidden;
+}
+.ap-background-video {
+  position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%;
+  width: auto; height: auto; transform: translate(-50%, -50%); object-fit: cover;
+  opacity: 0; transition: opacity 1.5s ease-in-out; pointer-events: none;
+}
+.ap-background-video.active { opacity: 1; }
+.ap-video-overlay {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(10, 20, 40, 0.88) 0%,
+    rgba(13, 27, 42, 0.82) 50%,
+    rgba(9, 20, 40, 0.88) 100%
+  );
+}
+
+@media (max-width: 768px) {
+  .ap-video-overlay {
+    background: linear-gradient(
+      135deg,
+      rgba(10, 20, 40, 0.92) 0%,
+      rgba(13, 27, 42, 0.88) 50%,
+      rgba(9, 20, 40, 0.92) 100%
+    );
+  }
+}
+
 .ap-monogram {
-  position: absolute; left: 62%; top: 30%; transform: translate(-50%, -50%);
+  position: absolute; left: 62%; top: 30%; transform: translate(-50%, -50%); z-index: 0;
   font-family: "Cinzel", serif; font-weight: 700; font-size: clamp(8rem, 22vw, 20rem);
-  letter-spacing: .05em; color: rgba(240,230,210,.07); user-select: none;
+  letter-spacing: .05em; color: rgba(240,230,210,.04); user-select: none;
 }
 
 .ap-card-wrap { position: relative; z-index: 2; padding: 14px 0 0 14px; }
@@ -388,18 +431,228 @@ const CSS = `
 .ap-btn:hover { background: var(--ap-gold); color: #000; }
 
 @media (max-width: 900px) {
-  .ap-root { height: auto; overflow: visible; }
-  .ap-stage { grid-template-columns: 1fr; height: auto; }
+  .ap-root { height: auto; overflow-y: auto; overflow-x: hidden; min-height: 100vh; }
+  .ap-stage { grid-template-columns: 1fr; height: auto; min-height: 100vh; padding-bottom: 80px; }
+  .ap-backdrop { position: fixed; }
   .ap-card-wrap { padding: 70px 16px 0; }
-  .ap-card { height: auto; min-height: 0; padding-bottom: 90px; }
+  .ap-card { height: auto; min-height: 0; padding-bottom: 40px; margin-bottom: 20px; }
   .ap-mini { display: none; }
-  .profile-back-btn { left: 50%; transform: translateX(-50%); bottom: 16px; }
+  .profile-back-btn { position: fixed; left: 50%; transform: translateX(-50%); bottom: 16px; z-index: 1000; }
   .profile-back-btn:hover { transform: translateX(-50%) translateY(-2px); }
   .ap-overlay { padding: 12px; }
+  .ap-modal { width: calc(100% - 24px); max-height: 90vh; }
   .ap-modal-head, .ap-modal-body { padding-left: 18px; padding-right: 18px; }
   .ap-resume { grid-template-columns: 1fr; }
-  .ap-stats { position: relative; left: auto; right: auto; bottom: auto; grid-template-columns: repeat(2, 1fr); padding: 80px 16px 24px; }
+  .ap-stats { position: relative; left: auto; right: auto; bottom: auto; grid-template-columns: repeat(2, 1fr); padding: 20px 16px 100px; gap: 20px; }
+  .ap-stat { min-height: auto; }
+  .ap-big { font-size: 1.5rem; height: auto; line-height: 1.2; }
+  .ap-ico { width: 90px; height: 90px; margin: 10px auto 0; }
+  .ap-sub { font-size: .65rem; margin-top: 6px; }
+  .ap-stat h3 { font-size: .7rem; }
 }
+
+@media (max-width: 768px) {
+  .ap-root { overflow-y: auto; }
+  .ap-stage { padding-bottom: 100px; }
+  .ap-monogram { font-size: clamp(6rem, 18vw, 12rem); left: 50%; top: 25%; }
+  .ap-card-wrap { padding: 60px 12px 0; }
+  .ap-card { padding-top: 20px; padding-bottom: 30px; margin-bottom: 20px; }
+  .ap-emblem-wrap { width: 180px; height: 180px; margin: 10px auto 0; }
+  .ap-emblem { width: 180px; height: 180px; }
+  .ap-name { font-size: 1rem; margin: 4px 0 2px; }
+  .ap-title { font-size: .95rem; }
+  .ap-badges { gap: 10px; margin-top: 20px; }
+  .ap-badge { width: 48px; height: 48px; }
+  .ap-badge svg { width: 22px; height: 22px; }
+  .ap-level { font-size: .8rem; padding: 2px 12px; }
+  .ap-stats { grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 20px 12px 100px; }
+  .ap-ico { width: 80px; height: 80px; }
+  .ap-big { font-size: 1.3rem; }
+  .ap-modal-title { font-size: 1.1rem; }
+  .ap-modal-sub { font-size: .85rem; }
+  .ap-grid { grid-template-columns: 1fr; gap: 12px; }
+  .ap-filters { gap: 8px; margin-bottom: 16px; }
+  .ap-chip { padding: 6px 14px; font-size: .68rem; }
+  .ap-pcard { margin-bottom: 0; }
+  .ap-pthumb { height: 140px; }
+  .ap-ptitle { font-size: .9rem; }
+  .ap-pbody p { font-size: .88rem; }
+  .ap-cert { flex-direction: column; text-align: center; gap: 10px; padding: 12px; }
+  .ap-cert-ico { width: 44px; height: 44px; }
+  .ap-cert-main h3 { font-size: .9rem; }
+  .ap-cert-main span { font-size: .85rem; }
+  .ap-job strong { font-size: .88rem; }
+  .ap-job em { font-size: .84rem; }
+  .ap-job ul { font-size: .88rem; }
+  .profile-back-btn { padding: 10px 20px; font-size: .85rem; bottom: 12px; }
+}
+
+@media (max-width: 600px) {
+  .ap-root { overflow-y: auto; }
+  .ap-stage { padding-bottom: 100px; }
+  .ap-card-wrap { padding: 50px 8px 0; }
+  .ap-card { padding-top: 16px; padding-bottom: 20px; margin-bottom: 20px; }
+  .ap-emblem-wrap { width: 160px; height: 160px; margin: 8px auto 0; }
+  .ap-emblem { width: 160px; height: 160px; }
+  .ap-name { font-size: .95rem; }
+  .ap-title { font-size: .9rem; }
+  .ap-level { font-size: .75rem; padding: 2px 10px; }
+  .ap-level i { width: 9px; height: 9px; }
+  .ap-badges { gap: 8px; margin-top: 16px; }
+  .ap-badge { width: 44px; height: 44px; }
+  .ap-badge svg { width: 20px; height: 20px; }
+  .ap-stats { padding: 20px 8px 100px; gap: 12px; grid-template-columns: 1fr 1fr; }
+  .ap-stat h3 { font-size: .65rem; }
+  .ap-sub { font-size: .6rem; }
+  .ap-big { font-size: 1.2rem; }
+  .ap-ico { width: 70px; height: 70px; margin: 8px auto 0; }
+  .ap-monogram { font-size: clamp(5rem, 16vw, 10rem); }
+  .ap-overlay { padding: 8px; }
+  .ap-modal { width: calc(100% - 16px); max-height: 92vh; }
+  .ap-modal-head { padding: 18px 16px 14px; }
+  .ap-modal-body { padding: 18px 16px 20px; }
+  .ap-modal-title { font-size: 1rem; }
+  .ap-modal-sub { font-size: .8rem; }
+  .ap-modal-close { width: 30px; height: 30px; }
+  .ap-modal-close svg { width: 16px; height: 16px; }
+  .ap-chip { padding: 5px 12px; font-size: .65rem; }
+  .ap-pthumb { height: 120px; }
+  .ap-pbody { padding: 12px 14px 14px; }
+  .ap-ptitle { font-size: .85rem; }
+  .ap-pbody p { font-size: .84rem; line-height: 1.4; }
+  .ap-tags { gap: 5px; }
+  .ap-tag { font-size: .68rem; padding: 2px 7px; }
+  .ap-link { font-size: .7rem; }
+  .ap-cert { padding: 10px; }
+  .ap-cert-ico { width: 40px; height: 40px; }
+  .ap-cert-main h3 { font-size: .85rem; }
+  .ap-cert-main span { font-size: .8rem; }
+  .ap-rsec h3 { font-size: .75rem; margin-bottom: 8px; }
+  .ap-rsec p { font-size: .88rem; line-height: 1.5; }
+  .ap-job strong { font-size: .84rem; }
+  .ap-job em { font-size: .8rem; margin: 2px 0 5px; }
+  .ap-job ul { font-size: .84rem; padding-left: 16px; }
+  .ap-btn { padding: 10px 18px; font-size: .75rem; margin-top: 18px; }
+  .profile-back-btn { padding: 9px 18px; font-size: .8rem; bottom: 10px; }
+  .skill-label { font-size: 11px; }
+  .skill-track { height: 7px; }
+}
+
+@media (max-width: 480px) {
+  .ap-stage { padding-bottom: 100px; }
+  .ap-emblem-wrap { width: 140px; height: 140px; }
+  .ap-emblem { width: 140px; height: 140px; }
+  .ap-name { font-size: .9rem; }
+  .ap-title { font-size: .85rem; }
+  .ap-level { font-size: .7rem; }
+  .ap-badges { gap: 6px; margin-top: 14px; }
+  .ap-badge { width: 40px; height: 40px; }
+  .ap-badge svg { width: 18px; height: 18px; }
+  .ap-stats { padding: 20px 8px 100px; gap: 10px; }
+  .ap-ico { width: 60px; height: 60px; }
+  .ap-big { font-size: 1.1rem; }
+  .ap-stat h3 { font-size: .6rem; }
+  .ap-sub { font-size: .58rem; }
+  .ap-modal-title { font-size: .95rem; }
+  .ap-pthumb { height: 100px; }
+}
+
+/* ---------- mobile: LoL-style profile layout ---------- */
+.ap-card-mono, .ap-crest-bottom { display: none; }
+
+@media (max-width: 768px) {
+  .ap-stage { display: block; height: auto; min-height: 100vh; padding-bottom: 0; }
+  .ap-monogram { display: none; }
+
+  .ap-card-wrap { padding: 68px 10px 0; }
+  .ap-card {
+    height: auto; min-height: 0; margin: 0;
+    padding: 26px 14px 56px;
+  }
+  .ap-card .ap-crest { display: none; }
+  .ap-card-mono {
+    position: absolute; inset: 0; z-index: 0; display: grid; place-items: center;
+    font-family: "Cinzel", serif; font-weight: 700; font-size: 11.5rem; line-height: 1;
+    letter-spacing: .04em; color: rgba(240,230,210,.055); user-select: none; pointer-events: none;
+  }
+
+  .ap-level { font-size: .82rem; padding: 3px 14px; }
+  .ap-emblem-wrap { width: 196px; height: 196px; margin: 18px auto 0; }
+  .ap-emblem { width: 196px; height: 196px; }
+  .ap-name { font-size: 1.08rem; margin: 12px 0 3px; letter-spacing: .03em; }
+  .ap-title { font-size: .95rem; }
+  .ap-badges { gap: 14px; margin-top: 26px; }
+  .ap-badge { width: 52px; height: 52px; }
+  .ap-badge svg { width: 24px; height: 24px; }
+
+  /* stats: 2 class cards on top, 3 tiles below */
+  .ap-stats {
+    position: relative; left: auto; right: auto; bottom: auto; z-index: 2;
+    margin: 0 10px; padding: 0 0 96px; gap: 0;
+    grid-template-columns: repeat(6, minmax(0, 1fr)); align-items: start;
+  }
+  .ap-stat { min-height: 0; min-width: 0; }
+
+  .ap-stat:nth-child(1), .ap-stat:nth-child(2) {
+    grid-column: span 3;
+    display: grid; grid-template-columns: 30px minmax(0, 1fr);
+    grid-template-areas: "ico role" "ico sub";
+    align-items: center; column-gap: 8px;
+    padding: 14px 8px 14px 12px; text-align: left;
+    background: linear-gradient(180deg, rgba(74,26,48,.62), rgba(20,9,16,.94));
+    border: 1px solid rgba(200,170,110,.32);
+  }
+  .ap-stat:nth-child(2) { border-left: none; }
+  .ap-stat:nth-child(1) .ap-ico, .ap-stat:nth-child(2) .ap-ico {
+    grid-area: ico; width: 30px; height: 30px; margin: 0; color: var(--ap-gold);
+  }
+  .ap-stat:nth-child(1) h3, .ap-stat:nth-child(2) h3 {
+    grid-area: role; font-size: .66rem; color: #b7b1a3; letter-spacing: .16em;
+  }
+  .ap-stat:nth-child(1) .ap-sub, .ap-stat:nth-child(2) .ap-sub {
+    grid-area: sub; margin-top: 3px; font-size: .62rem;
+    color: var(--ap-gold-hi); letter-spacing: .01em; line-height: 1.25;
+  }
+  .ap-stat:nth-child(1) .ap-big, .ap-stat:nth-child(2) .ap-big { display: none; }
+
+  .ap-stat:nth-child(n+3) {
+    grid-column: span 2;
+    display: flex; flex-direction: column; align-items: center;
+    text-align: center; padding: 28px 4px 0;
+  }
+  .ap-stat:nth-child(n+3) h3 {
+    order: 1; font-size: .6rem; color: #b7b1a3; letter-spacing: .08em;
+  }
+  .ap-stat:nth-child(n+3) .ap-ico {
+    order: 2; width: 54px; height: 54px; margin: 12px 0 8px; color: var(--ap-gold);
+  }
+  .ap-stat:nth-child(n+3) .ap-big {
+    order: 3; height: auto; font-size: 1.15rem; line-height: 1.1;
+  }
+  .ap-stat:nth-child(n+3) .ap-sub { display: none; }
+  .ap-big:empty { display: none; }
+
+  .ap-crest-bottom {
+    display: block; position: absolute; left: 0; right: 0; bottom: 0;
+    width: 100%; height: 74px; z-index: 1; pointer-events: none;
+  }
+
+  .profile-back-btn {
+    position: fixed; top: 14px; left: 14px; bottom: auto; transform: none;
+    width: 44px; height: 44px; padding: 0; display: grid; place-items: center;
+    font-size: 1.15rem; line-height: 1; background: rgba(4,10,18,.9);
+  }
+  .profile-back-btn:hover { transform: none; background: var(--ap-gold); color: #000; }
+}
+
+@media (max-width: 380px) {
+  .ap-stat:nth-child(1), .ap-stat:nth-child(2) {
+    grid-template-columns: 26px minmax(0, 1fr); column-gap: 6px; padding: 12px 6px 12px 10px;
+  }
+  .ap-stat:nth-child(1) .ap-ico, .ap-stat:nth-child(2) .ap-ico { width: 26px; height: 26px; }
+  .ap-stat:nth-child(1) .ap-sub, .ap-stat:nth-child(2) .ap-sub { font-size: .58rem; }
+}
+
 @media (prefers-reduced-motion: reduce) { .ap-root * { transition: none !important; animation: none !important; } }
 `;
 
@@ -415,8 +668,30 @@ export default function ProfileOverview({
   const [animate, setAnimate] = useState(true);
   const [modal, setModal] = useState(null); // null | "projects" | "certs" | "resume"
   const [filter, setFilter] = useState("all");
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const closeRef = useRef(null);
   const lastFocus = useRef(null);
+
+  // Video slideshow array
+  const backgroundVideos = [
+    facelessVideo,
+    feverDreamVideo,
+    lyricVideo,
+    motivationVideo,
+    oldVideo,
+    transitionalVideo,
+    typographyVideo,
+    ugcVideo
+  ];
+
+  // Video slideshow effect - change video every 8 seconds
+  useEffect(() => {
+    const videoInterval = setInterval(() => {
+      setCurrentVideoIndex((prevIndex) => (prevIndex + 1) % backgroundVideos.length);
+    }, 8000);
+
+    return () => clearInterval(videoInterval);
+  }, [backgroundVideos.length]);
 
   // Esc closes the modal, focus moves into it and returns to the tile afterwards
   useEffect(() => {
@@ -527,7 +802,23 @@ export default function ProfileOverview({
       </svg>
 
       <div className="ap-stage">
-        <div className="ap-backdrop" />
+        <div className="ap-backdrop">
+          {/* Video Slideshow Background */}
+          <div className="ap-video-slideshow">
+            {backgroundVideos.map((video, index) => (
+              <video
+                key={index}
+                className={`ap-background-video ${index === currentVideoIndex ? 'active' : ''}`}
+                src={video}
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            ))}
+            <div className="ap-video-overlay"></div>
+          </div>
+        </div>
         <div className="ap-monogram" aria-hidden="true">AP</div>
 
         <aside className="ap-card-wrap">
@@ -538,6 +829,7 @@ export default function ProfileOverview({
                 <path d="M145 6 L162 44 L145 58 L128 44Z" fill="url(#ap-ember)" stroke="#fff0c2" strokeWidth="1.5" />
               </svg>
             </div>
+            <div className="ap-card-mono" aria-hidden="true">AP</div>
             <span className="ap-level"><i />{level}</span>
 
             <div className="ap-emblem-wrap">
@@ -601,10 +893,7 @@ export default function ProfileOverview({
               <clipPath id="ap-avatar"><circle cx="110" cy="100" r="46" /></clipPath>
 
               <g clipPath="url(#ap-avatar)">
-                <rect x="60" y="50" width="100" height="100" fill="#35506b" />
-                <ellipse cx="110" cy="148" rx="42" ry="30" fill="#14202e" />
-                <circle cx="110" cy="94" r="22" fill="#c9a07a" />
-                <path d="M86 90 Q90 66 112 68 Q134 66 134 90 Q124 78 110 80 Q96 78 86 90Z" fill="#1b1410" />
+                <image href={profileImage} x="64" y="54" width="92" height="92" preserveAspectRatio="xMidYMid slice" />
               </g>
             </svg>
             </div>
@@ -671,6 +960,11 @@ export default function ProfileOverview({
             <FlagTriangleRight className="ap-ico" size={100} />
           </div>
         </section>
+
+        <svg className="ap-crest-bottom" viewBox="0 0 290 90" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 10 Q40 20 90 48 L145 40 L200 48 Q250 20 290 10 Q250 60 175 82 L145 88 L115 82 Q40 60 0 10Z" fill="url(#ap-ember)" stroke="#f6c26b" strokeWidth="2" />
+          <path d="M145 6 L162 44 L145 58 L128 44Z" fill="url(#ap-ember)" stroke="#fff0c2" strokeWidth="1.5" />
+        </svg>
 
         <button className="profile-back-btn" onClick={onBackClick} aria-label="Back">
           ←

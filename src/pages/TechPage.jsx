@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import TopNavigation from '../components/TopNavigation';
 import FriendsList from '../components/FriendsList';
 import threadsIcon from '../visuals/threads-icon.jpg';
@@ -92,11 +92,45 @@ const SKILLS = [
   ["3D Animation", 65]
 ];
 
+// Tracks horizontal scroll of a strip and returns { left, width } in percent
+const useScrollStrip = () => {
+  const ref = useRef(null);
+  const [bar, setBar] = useState({ left: 0, width: 100 });
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const update = () => {
+      const max = el.scrollWidth - el.clientWidth;
+      const width = el.scrollWidth > 0 ? Math.max((el.clientWidth / el.scrollWidth) * 100, 22) : 100;
+      const left = max > 0 ? (el.scrollLeft / max) * (100 - width) : 0;
+      setBar({ left, width });
+    };
+    update();
+    el.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      el.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, []);
+
+  return [ref, bar];
+};
+
+const ScrollStrip = ({ bar, className = '' }) => (
+  <div className={`tech-scroll-strip ${className}`} aria-hidden="true">
+    <span style={{ left: `${bar.left}%`, width: `${bar.width}%` }} />
+  </div>
+);
+
 const TechPage = ({ onPlayClick, onHomeClick, onTechClick, onProfileClick }) => {
   const [currentView, setCurrentView] = useState('projects');
   const [activeCategory, setActiveCategory] = useState('WEB');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
+  const [tabsRef, tabsBar] = useScrollStrip();
+  const [gridRef, gridBar] = useScrollStrip();
 
   const currentProjects = CATEGORIES[activeCategory];
   const selectedProject = currentProjects[selectedIndex];
@@ -235,7 +269,7 @@ const TechPage = ({ onPlayClick, onHomeClick, onTechClick, onProfileClick }) => 
         
         {/* Secondary Navigation Bar with Category Tabs - Always Visible */}
         <div className="tech-secondary-nav">
-          <div className="tech-category-tabs">
+          <div className="tech-category-tabs" ref={tabsRef}>
             {Object.keys(CATEGORIES).map((category) => (
               <button
                 key={category}
@@ -246,6 +280,7 @@ const TechPage = ({ onPlayClick, onHomeClick, onTechClick, onProfileClick }) => 
               </button>
             ))}
           </div>
+          <ScrollStrip bar={tabsBar} className="tech-strip-tabs" />
           <div className="tech-secondary-right">
             <span className="tech-links-label">LINKS</span>
           </div>
@@ -311,7 +346,8 @@ const TechPage = ({ onPlayClick, onHomeClick, onTechClick, onProfileClick }) => 
           {/* Projects View */}
           <section className={`tech-view ${currentView === 'projects' ? 'active' : ''}`}>
             <div className="tech-content-wrap">
-              <div className="tech-grid">
+              <div className="tech-grid-strip">
+              <div className="tech-grid" ref={gridRef}>
                 {currentProjects.map((project, index) => (
                   <button
                     key={index}
@@ -342,6 +378,8 @@ const TechPage = ({ onPlayClick, onHomeClick, onTechClick, onProfileClick }) => 
                   </button>
                 ))}
               </div>
+              <ScrollStrip bar={gridBar} className="tech-strip-carousel" />
+              </div>
 
               <div className={`tech-hero ${isFading ? 'fading' : ''}`} aria-hidden="true" style={{ display: (backgroundImage || backgroundVideo) ? 'none' : 'flex' }}>
                 {typeof selectedProject[1] === 'string' && selectedProject[1].startsWith('devicon-') ? (
@@ -354,6 +392,22 @@ const TechPage = ({ onPlayClick, onHomeClick, onTechClick, onProfileClick }) => 
                     alt={selectedProject[0]}
                   />
                 )}
+              </div>
+
+              <div className={`tech-mobile-hero ${isFading ? 'fading' : ''}`}>
+                {activeCategory === 'VIDEOS' && backgroundVideo ? (
+                  <video
+                    key={selectedProject[0]}
+                    src={backgroundVideo}
+                    controls
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                  />
+                ) : backgroundImage ? (
+                  <img src={backgroundImage} alt={`${selectedProject[0]} preview`} />
+                ) : null}
               </div>
 
               <div className={`tech-detail ${isFading ? 'fading' : ''}`}>
@@ -396,6 +450,7 @@ const TechPage = ({ onPlayClick, onHomeClick, onTechClick, onProfileClick }) => 
                       <div className="tooltip-container">
                         <button className="tech-btn-icon" onClick={() => handleGithubClick(selectedProject[0])}>
                           <i className="devicon-github-original"></i>
+                          <span className="tech-btn-text">GitHub</span>
                         </button>
                         <div className="tooltip">VIEW REPO</div>
                       </div>
@@ -410,6 +465,7 @@ const TechPage = ({ onPlayClick, onHomeClick, onTechClick, onProfileClick }) => 
                               <path d="M7.753 16.239a6 6 0 0 1 0-8.478"/>
                               <circle cx="12" cy="12" r="2"/>
                             </svg>
+                            <span className="tech-btn-text">Live View</span>
                           </button>
                           <div className="tooltip">LIVE PREVIEW</div>
                         </div>

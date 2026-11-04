@@ -1,5 +1,6 @@
 import React from 'react';
 import './MainProfile.css';
+import profileImage from '../visuals/me.jpg';
 
 const MainProfile = () => {
   return (
@@ -11,7 +12,7 @@ const MainProfile = () => {
       <div className="profile-content">
         <div className="profile-avatar-large">
           <div className="avatar-border">
-            <div className="avatar-image"></div>
+            <div className="avatar-image" style={{ backgroundImage: `url(${profileImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
             <div className="level-badge">127</div>
           </div>
         </div>
